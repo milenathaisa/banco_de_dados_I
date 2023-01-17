@@ -23,21 +23,16 @@ create table tbl_Registrar (
 ID_Registro smallint auto_increment primary key,
 Nota_Unid1 decimal(3,1) not null,
 Nota_Unid2 decimal(3,1) not null,
-Nota_Final decimal(3,1) not null
+Nota_Final decimal(3,1)
 )
 ;
 
 
 alter table tbl_aluno
-add ID_Disciplina smallint not null;
-
-alter table tbl_aluno
-add constraint FK_ID_Disciplina
-foreign key(ID_Disciplina)
-references tbl_disciplina(ID_Disciplina);
+add ID_Disciplina smallint;
 
 alter table tbl_professor
-add ID_Disciplina smallint not null;
+add ID_Disciplina smallint;
 
 alter table tbl_professor
 add constraint FK_ID_Disciplina_Prof
@@ -46,21 +41,12 @@ references tbl_disciplina(ID_Disciplina);
 
 alter table tbl_disciplina
 add column SIAPE varchar(6) not null;
+add column Nome_Disciplina varchar(15);
 
 alter table tbl_disciplina
 add constraint FK_SIAPE
 foreign key (SIAPE)
 references tbl_professor(SIAPE);
-
-
-alter table tbl_disciplina
-add column ID_Aluno smallint(6) not null;
-
-
-alter table tbl_disciplina
-add constraint FK_ID_Aluno
-foreign key (ID_Aluno)
-references tbl_aluno(ID_Aluno);
 
 alter table tbl_registrar
 add column ID_Aluno smallint(6) not null;
@@ -70,3 +56,37 @@ add constraint FKey_ID_ALUNO
 foreign key (ID_Aluno)
 references tbl_aluno(ID_Aluno);
 
+Insert into tbl_aluno (Nome_Aluno, Sobrenome_Aluno,CPF_Aluno) values  
+("Akin", "Dagba", "12578364859-12"),
+("Maiara","Águeda", "9459465786-10"),
+("Milena", "Santiago", "2957684854-12"),
+("Williem", "Berg", "8763528549-13");
+
+Insert into tbl_professor (SIAPE, Nome_Professor, Sobrenome_Professor) values
+("345678", "Samuel", "Macedo"),
+("762308", "Heloísa", "Melo"),
+("732493", "Renata", "Freire");
+
+Insert into tbl_disciplina values (SIAPE, Nome_Disciplina) values
+("345678", "Banco I"),
+("762308", "Estatistica"),
+("732493", "IA") ;
+
+alter table tbl_professor modify column  ID_Disciplina values
+(1),
+(2),
+(3); 
+
+Insert into tbl_registrar (ID_Aluno, ID_Disciplina, Nota_Unid1, Nota_Unid2) values
+(1, 1, 10, 10),
+(1, 2, 7, 8),
+(1, 3, 8, 9),
+(2, 1, 10, 10),
+(2, 2, 8, 7),
+(2, 3, 7, 9),
+(3, 1, 10, 10),
+(3, 2, 8, 9),
+(3, 3, 8, 7),
+(4, 1, 10, 10),
+(4, 2, 7, 8),
+(4, 3, 9, 10);
